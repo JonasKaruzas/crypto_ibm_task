@@ -15,4 +15,14 @@ async function fetchAllcurrencies() {
   }
 }
 
-module.exports = { fetchAllcurrencies };
+async function fetchCurrencyData() {
+  try {
+    const currencyData = await exchange.fetchTicker("BTC/USD");
+
+    return currencyData.last;
+  } catch (error) {
+    console.error("Error fetching cryptocurrencies:", error);
+  }
+}
+
+module.exports = { fetchAllcurrencies, fetchCurrencyData };
