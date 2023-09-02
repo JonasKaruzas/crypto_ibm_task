@@ -1,14 +1,34 @@
-const http = require("http");
-
-const hostname = "127.0.0.1";
+const express = require("express");
+const app = express();
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World");
+const { fetchAllcurrencies } = require("./cctx_handler");
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.get("/getAllCurrencies", async (req, res) => {
+  const allCurrencies = await fetchAllcurrencies();
+  res.send(allCurrencies);
+});
+
+app.get("/getCurrencyData", (req, res) => {
+  res.send("This is getCurrencyData");
+});
+
+app.get("/getCurrencyHistoryPrices", (req, res) => {
+  res.send("This is getCurrencyHistoryPrices");
+});
+
+app.post("/userSearch", (req, res) => {
+  res.send("This is userSearch");
+});
+
+app.post("/userSelection", (req, res) => {
+  res.send("This is userSelection");
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
