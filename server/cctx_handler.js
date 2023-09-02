@@ -5,10 +5,11 @@ const exchange = new ccxt.binance();
 async function fetchAllcurrencies() {
   try {
     const markets = await exchange.loadMarkets();
+    let currencies = exchange.currencies;
 
-    const cryptocurrencies = Object.keys(markets);
+    const currencyList = Object.keys(currencies);
 
-    return cryptocurrencies;
+    return currencyList;
   } catch (error) {
     console.error("Error fetching cryptocurrencies:", error);
   }

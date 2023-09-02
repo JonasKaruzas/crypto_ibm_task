@@ -1,8 +1,13 @@
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const port = 5000;
 
 const { fetchAllcurrencies } = require("./cctx_handler");
+
+app.use(cors());
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -10,7 +15,7 @@ app.get("/", (req, res) => {
 
 app.get("/getAllCurrencies", async (req, res) => {
   const allCurrencies = await fetchAllcurrencies();
-  res.send(allCurrencies);
+  res.json(allCurrencies);
 });
 
 app.get("/getCurrencyData", (req, res) => {
