@@ -15,9 +15,14 @@ async function fetchAllcurrencies() {
   }
 }
 
-async function fetchCurrencyData() {
+async function fetchCurrencyData(currency) {
+  console.log("fetchingCurData");
+  console.log(currency);
+  console.log(typeof currency);
+  if (currency === "") return;
+
   try {
-    const currencyData = await exchange.fetchTicker("BTC/USD");
+    const currencyData = await exchange.fetchTicker(`${currency}/USDT`);
 
     return currencyData.last;
   } catch (error) {

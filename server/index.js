@@ -19,7 +19,7 @@ app.get("/getAllCurrencies", async (req, res) => {
 });
 
 app.get("/getCurrencyData", async (req, res) => {
-  const currencyData = await fetchCurrencyData();
+  const currencyData = await fetchCurrencyData(req.query.curr);
   res.json(currencyData);
 });
 
