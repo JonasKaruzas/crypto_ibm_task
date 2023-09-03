@@ -25,4 +25,33 @@ async function fetchCurrencyData() {
   }
 }
 
-module.exports = { fetchAllcurrencies, fetchCurrencyData };
+async function fetchHistoryPrices() {
+  const availableTimeframes = exchange.timeframes;
+
+  console.log(availableTimeframes);
+
+  console.log("fetching history");
+  const symbol = "BTC/USDT";
+  const timeframe = "1d";
+  const limit = 2;
+
+  try {
+    const ohlcv = await exchange.fetchOHLCV(symbol, timeframe, undefined, limit);
+
+    return ohlcv;
+    // ohlcv.forEach((candle, index) => {
+    //   console.log(`Candle ${index + 1}:`, {
+    //     timestamp: new Date(candle[0]),
+    //     open: candle[1],
+    //     high: candle[2],
+    //     low: candle[3],
+    //     close: candle[4],
+    //     volume: candle[5],
+    //   });
+    // });
+  } catch (error) {
+    console.error("Error fetching historical data:", error);
+  }
+}
+
+module.exports = { fetchAllcurrencies, fetchCurrencyData, fetchHistoryPrices };
