@@ -40,8 +40,7 @@ const SearchInput = (props) => {
             label={isError ? "Invalid input" : "Search for cryptocurrency"}
             error={isError}
             disabled={props.currencies.length < 1}
-            variant="filled"
-            sx={{ backgroundColor: "white" }}
+            variant="outlined"
           />
         )}
       />

@@ -1,4 +1,4 @@
-import { Grid, InputLabel, MenuItem, Paper, Select, Skeleton } from "@mui/material";
+import { Box, Divider, Grid, InputLabel, MenuItem, Paper, Select, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
@@ -61,13 +61,14 @@ const PriceGraph = (props) => {
 
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
+      <Divider sx={{ paddingTop: 1 }} />
+      <Grid container justifyContent="space-between" className="price-graph">
+        <Grid item xs={4}>
           <InputLabel id="range-label">Data range</InputLabel>
           {loading ? (
-            <Skeleton variant="rectangular" width={120} height={56} />
+            <Skeleton variant="rectangular" width={"100%"} height={56} />
           ) : (
-            <Select labelId="range-label" id="range-select" value={timeframe} label="Age" onChange={(e) => setTimeframe(e.target.value)} sx={{ minWidth: 120 }}>
+            <Select labelId="range-label" id="range-select" value={timeframe} onChange={(e) => setTimeframe(e.target.value)} sx={{ width: "100%" }}>
               {timeframes.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
@@ -76,18 +77,20 @@ const PriceGraph = (props) => {
             </Select>
           )}
         </Grid>
-        <Grid item xs={6}>
-          <InputLabel id="data-point-label">Data point limit</InputLabel>
+
+        <Grid item xs={4}>
+          <InputLabel id="data-point-label" sx={{ float: "right}" }}>
+            Data points
+          </InputLabel>
           {loading ? (
-            <Skeleton variant="rectangular" width={120} height={56} />
+            <Skeleton variant="rectangular" width={"100%"} height={56} />
           ) : (
             <Select
               labelId="data-point-label"
               id="data-point-select"
               value={dataPointLimit}
-              label="Age"
               onChange={(e) => setDataPointLimit(e.target.value)}
-              sx={{ minWidth: 120 }}
+              sx={{ width: "100%" }}
             >
               {Array.from({ length: 40 }, (x, i) => i + 1).map((item) => (
                 <MenuItem key={item} value={item}>
@@ -98,26 +101,32 @@ const PriceGraph = (props) => {
           )}
         </Grid>
       </Grid>
+
       {currencyHistory.length === 0 ? (
-        <div>Please select data range</div>
+        <Typography paddingTop={3} textAlign={"center"} color={"#02B2AF"}>
+          Please select data range
+        </Typography>
       ) : (
-        <LineChart
-          xAxis={[{ dataKey: "date", valueFormatter: (val) => transformX(val) }]}
-          series={[{ dataKey: "price" }]}
-          width={500}
-          height={300}
-          dataset={currencyHistory}
-          sx={{
-            [`.${axisClasses.bottom}`]: {
-              [`.${axisClasses.tickLabel}`]: {
-                display: "none",
+        <Box sx={{ display: "flex" }}>
+          <LineChart
+            xAxis={[{ dataKey: "date", valueFormatter: (val) => transformX(val) }]}
+            series={[{ dataKey: "price" }]}
+            height={350}
+            dataset={currencyHistory}
+            margin={{ top: 10, bottom: 10, left: 45, right: 0 }}
+            sx={{
+              paddingY: 1,
+              [`.${axisClasses.bottom}`]: {
+                [`.${axisClasses.tickLabel}`]: {
+                  display: "none",
+                },
+                [`.${axisClasses.tickContainer}`]: {
+                  display: "none",
+                },
               },
-              [`.${axisClasses.tickContainer}`]: {
-                display: "none",
-              },
-            },
-          }}
-        />
+            }}
+          />
+        </Box>
       )}
     </>
   );

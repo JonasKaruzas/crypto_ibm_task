@@ -13,7 +13,6 @@ function App() {
   const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
-    console.log("get all currencies");
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:5000/getAllCurrencies");
@@ -32,17 +31,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("searched for - ", searchedCurrency);
-
-    console.log("get currency price");
-
     if (!searchedCurrency) return;
     setCurrencyPrice({ ...currencyPrice, loading: true });
 
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:5000/getCurrencyData?curr=${searchedCurrency}`);
-        console.log(response);
 
         if (!response.ok) {
           setCurrencyPrice({ currencyPrice: -1, loading: false });
@@ -61,12 +55,14 @@ function App() {
 
   return (
     <>
-      <Paper>
+      <Paper className="app">
         <Stack spacing={2}>
-          <Typography variant="h1" gutterBottom>
+          <Typography variant="h3" gutterBottom className="app__title">
             Crypto info
           </Typography>
+
           <SearchInput currencies={currencies} setSearchedCurrency={setSearchedCurrency} />
+
           {searchedCurrency === "" || searchedCurrency === null ? null : (
             <SearchItem
               searchedCurrency={searchedCurrency}
@@ -76,6 +72,7 @@ function App() {
               showHistory={showHistory}
             />
           )}
+
           {showHistory ? <PriceGraph searchedCurrency={searchedCurrency} /> : null}
         </Stack>
       </Paper>
