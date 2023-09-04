@@ -7,7 +7,7 @@ const SearchInput = (props) => {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [isError, setIsError] = useState(false);
 
-  const searchLimit = 8;
+  const searchLimit = 30;
 
   const handleChange = (val) => {
     if (val.length <= searchLimit) {
@@ -29,6 +29,7 @@ const SearchInput = (props) => {
       <Autocomplete
         inputValue={searchInputValue}
         onInputChange={(e, newVal) => handleChange(newVal)}
+        onChange={(e, newVal) => props.setSearchedCurrency(newVal)}
         disablePortal
         id="combo-box-demo"
         options={props.currencies}

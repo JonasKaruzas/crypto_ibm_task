@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 5000;
 
-const { fetchAllcurrencies, fetchCurrencyData, fetchHistoryPrices } = require("./cctx_handler");
+const { fetchAllcurrencies, fetchCurrencyData, fetchTimeFrames, fetchHistoryPrices } = require("./cctx_handler");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,11 +20,22 @@ app.get("/getAllCurrencies", async (req, res) => {
 
 app.get("/getCurrencyData", async (req, res) => {
   const currencyData = await fetchCurrencyData(req.query.curr);
+
+  if (currencyData === undefined) {
+    res.send("-1");
+    return;
+  }
+
+  res.json(currencyData);
+});
+
+app.get("/getTimeframes", async (req, res) => {
+  const currencyData = await fetchTimeFrames();
   res.json(currencyData);
 });
 
 app.get("/getCurrencyHistoryPrices", async (req, res) => {
-  const currencyData = await fetchHistoryPrices();
+  const currencyData = await fetchHistoryPrices(req.query);
   res.json(currencyData);
 });
 

@@ -16,9 +16,6 @@ async function fetchAllcurrencies() {
 }
 
 async function fetchCurrencyData(currency) {
-  console.log("fetchingCurData");
-  console.log(currency);
-  console.log(typeof currency);
   if (currency === "") return;
 
   try {
@@ -30,15 +27,15 @@ async function fetchCurrencyData(currency) {
   }
 }
 
-async function fetchHistoryPrices() {
-  const availableTimeframes = exchange.timeframes;
+function fetchTimeFrames() {
+  return (availableTimeframes = exchange.timeframes);
+}
 
-  console.log(availableTimeframes);
-
+async function fetchHistoryPrices(query) {
   console.log("fetching history");
-  const symbol = "BTC/USDT";
-  const timeframe = "1d";
-  const limit = 2;
+  const symbol = `${query.curr}/USDT`;
+  const timeframe = query.timeframe;
+  const limit = query.limit;
 
   try {
     const ohlcv = await exchange.fetchOHLCV(symbol, timeframe, undefined, limit);
@@ -59,4 +56,4 @@ async function fetchHistoryPrices() {
   }
 }
 
-module.exports = { fetchAllcurrencies, fetchCurrencyData, fetchHistoryPrices };
+module.exports = { fetchAllcurrencies, fetchCurrencyData, fetchTimeFrames, fetchHistoryPrices };
