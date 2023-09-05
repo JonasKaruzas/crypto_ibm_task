@@ -8,7 +8,7 @@ const PriceGraph = (props) => {
   const [loading, setLoading] = useState(false);
   const [currencyHistory, setCurrencyHistory] = useState([]);
   const [timeframe, setTimeframe] = useState("");
-  const [dataPointLimit, setDataPointLimit] = useState(3);
+  const [dataPointLimit, setDataPointLimit] = useState(10);
 
   useEffect(() => {
     const fetchTimeframes = async () => {
@@ -79,9 +79,7 @@ const PriceGraph = (props) => {
         </Grid>
 
         <Grid item xs={4}>
-          <InputLabel id="data-point-label" sx={{ float: "right}" }}>
-            Data points
-          </InputLabel>
+          <InputLabel id="data-point-label">Data points</InputLabel>
           {loading ? (
             <Skeleton variant="rectangular" width={"100%"} height={56} />
           ) : (

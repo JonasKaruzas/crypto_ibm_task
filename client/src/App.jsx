@@ -8,7 +8,7 @@ import { Paper } from "@mui/material";
 
 function App() {
   const [currencies, setCurrencies] = useState([]);
-  const [searchedCurrency, setSearchedCurrency] = useState("");
+  const [searchedCurrency, setSearchedCurrency] = useState(null);
   const [currencyPrice, setCurrencyPrice] = useState(() => ({ value: -1, loading: false }));
   const [showHistory, setShowHistory] = useState(false);
 
@@ -31,7 +31,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!searchedCurrency) return;
+    if (!searchedCurrency) {
+      setShowHistory(false);
+      return;
+    }
+
     setCurrencyPrice({ ...currencyPrice, loading: true });
 
     const fetchData = async () => {
@@ -63,7 +67,7 @@ function App() {
 
           <SearchInput currencies={currencies} setSearchedCurrency={setSearchedCurrency} />
 
-          {searchedCurrency === "" || searchedCurrency === null ? null : (
+          {searchedCurrency && (
             <SearchItem
               searchedCurrency={searchedCurrency}
               currencyPrice={currencyPrice.value}
@@ -73,7 +77,7 @@ function App() {
             />
           )}
 
-          {showHistory ? <PriceGraph searchedCurrency={searchedCurrency} /> : null}
+          {showHistory && <PriceGraph searchedCurrency={searchedCurrency} />}
         </Stack>
       </Paper>
     </>

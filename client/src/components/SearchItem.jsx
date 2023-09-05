@@ -28,9 +28,11 @@ const SearchItem = (props) => {
         </Grid>
 
         <Grid item xs={4}>
-          <Button variant="outlined" onClick={() => props.setShowHistory(!props.showHistory)}>
-            Show price graph
-          </Button>
+          {!props.showHistory && (
+            <Button variant="outlined" onClick={() => props.setShowHistory(!props.showHistory)}>
+              Show price graph
+            </Button>
+          )}
         </Grid>
       </Grid>
     </>
@@ -41,6 +43,8 @@ SearchItem.propTypes = {
   searchedCurrency: PropTypes.string,
   currencyPrice: PropTypes.number,
   loading: PropTypes.bool,
+  showHistory: PropTypes.bool,
+  setShowHistory: PropTypes.func,
 };
 
 export default SearchItem;
