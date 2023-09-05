@@ -2,14 +2,14 @@
 
 ## Overview
 
-This is a technical challange task.
-The main task was to use cctx library, get crypto currencies, add a selector, show the price.
+This is a technical challenge task.
+The main task was to use cctx library, get cryptocurrencies, add a selector and show the price.
 
-Additionaly:
+Additionally:
 
 - Created API endpoints, to have all calculations in Node.
 - Added a price graph for historical prices.
-- Used CryptoCompare endpoint, to fetch full names and icons for the currancies
+- Used CryptoCompare endpoint, to fetch full names and icons for the currencies
 - Added Analysis dialog, to show what currencies were most searched and selected (to view the graph)
 
 ## Table of Contents
@@ -46,7 +46,7 @@ npm run dev
 
 #### `GET /getAllCurrencies`
 
-Retrieve a list of all crypto currencies.
+Retrieve a list of all cryptocurrencies.
 
 **Response:**
 
