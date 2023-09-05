@@ -3,13 +3,15 @@ import SearchInput from "./components/SearchInput";
 import SearchItem from "./components/SearchItem";
 import Stack from "@mui/material/Stack";
 import PriceGraph from "./components/PriceGraph";
-import { Box, Paper } from "@mui/material";
+import { Box, Fab, Paper } from "@mui/material";
+import AnalyticsDialog from "./components/AnalyticsDialog";
 
 function App() {
   const [currencies, setCurrencies] = useState([]);
   const [searchedCurrency, setSearchedCurrency] = useState(null);
   const [currencyPrice, setCurrencyPrice] = useState(() => ({ value: -1, loading: false }));
   const [showHistory, setShowHistory] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +61,9 @@ function App() {
   return (
     <>
       <Paper className="app">
+        <Fab variant="extended" onClick={() => setOpenDialog(true)}>
+          Analysis
+        </Fab>
         <Stack spacing={2}>
           <Box className="app__title">
             <Box className="app__title--top">CRYPTO</Box>
@@ -81,6 +86,7 @@ function App() {
           {showHistory && <PriceGraph searchedCurrency={searchedCurrency} />}
         </Stack>
       </Paper>
+      <AnalyticsDialog open={openDialog} onClose={() => setOpenDialog(false)} />
     </>
   );
 }

@@ -19,7 +19,6 @@ const addSearch = async (curr) => {
     const doc = { value: curr };
     const result = await myColl.insertOne(doc);
   } finally {
-    await client.close();
   }
 };
 
@@ -31,8 +30,51 @@ const addSelect = async (curr) => {
     const doc = { value: curr };
     const result = await myColl.insertOne(doc);
   } finally {
-    await client.close();
   }
 };
 
-module.exports = { addSearch, addSelect };
+const getSearchData = async () => {
+  try {
+    await client.connect();
+    const myDB = client.db(dbName);
+    const myColl = myDB.collection("Search");
+
+    const pipeline = [
+      {
+        $group: {
+          _id: "$value",
+          count: { $sum: 1 },
+        },
+      },
+    ];
+
+    const result = await myColl.aggregate(pipeline).toArray();
+
+    return result;
+  } finally {
+  }
+};
+
+const getSelectData = async () => {
+  try {
+    await client.connect();
+    const myDB = client.db(dbName);
+    const myColl = myDB.collection("Select");
+
+    const pipeline = [
+      {
+        $group: {
+          _id: "$value",
+          count: { $sum: 1 },
+        },
+      },
+    ];
+
+    const result = await myColl.aggregate(pipeline).toArray();
+
+    return result;
+  } finally {
+  }
+};
+
+module.exports = { addSearch, addSelect, getSearchData, getSelectData };

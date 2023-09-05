@@ -7,7 +7,7 @@ const port = 5000;
 const { fetchAllcurrencies, fetchCurrencyData, fetchTimeFrames, fetchHistoryPrices } = require("./cctx_handler");
 const { fetchCryptoNamesAndIcons } = require("./cryptoComparison_handler");
 
-const { addSearch, addSelect } = require("./mongodb_handler");
+const { addSearch, addSelect, getSearchData, getSelectData } = require("./mongodb_handler");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -54,12 +54,14 @@ app.get("/getCurrencyHistoryPrices", async (req, res) => {
   res.json(currencyData);
 });
 
-app.post("/userSearch", (req, res) => {
-  res.send("This is userSearch");
+app.get("/userSearch", async (req, res) => {
+  const data = await getSearchData();
+  res.json(data);
 });
 
-app.post("/userSelection", (req, res) => {
-  res.send("This is userSelection");
+app.get("/userSelect", async (req, res) => {
+  const data = await getSelectData();
+  res.json(data);
 });
 
 app.listen(port, () => {
