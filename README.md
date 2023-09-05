@@ -16,13 +16,16 @@ Additionally:
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [API Documentation](#api-documentation) (if applicable)
+- [API Documentation](#api-documentation)
 
 ## Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/JonasKaruzas/crypto_ibm_task.git
+
+# Navigate to the project directory
+cd crypto_ibm_task
 
 # Navigate to the client directory
 cd client
