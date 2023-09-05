@@ -7,6 +7,8 @@ const port = 5000;
 const { fetchAllcurrencies, fetchCurrencyData, fetchTimeFrames, fetchHistoryPrices } = require("./cctx_handler");
 const { fetchCryptoNamesAndIcons } = require("./cryptoComparison_handler");
 
+const { addSearch, addSelect } = require("./mongodb_handler");
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -29,6 +31,7 @@ app.get("/getAllCurrencies", async (req, res) => {
 
 app.get("/getCurrencyData", async (req, res) => {
   console.log(`User searched for - ${req.query.curr}`);
+  addSearch(req.query.curr);
   const currencyData = await fetchCurrencyData(req.query.curr);
 
   if (currencyData === undefined) {
@@ -46,6 +49,7 @@ app.get("/getTimeframes", async (req, res) => {
 
 app.get("/getCurrencyHistoryPrices", async (req, res) => {
   console.log(`User selected - ${req.query.curr}`);
+  addSelect(req.query.curr);
   const currencyData = await fetchHistoryPrices(req.query);
   res.json(currencyData);
 });
