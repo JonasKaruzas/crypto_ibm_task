@@ -68,7 +68,13 @@ const PriceGraph = (props) => {
           {loading ? (
             <Skeleton variant="rectangular" width={"100%"} height={56} />
           ) : (
-            <Select labelId="range-label" id="range-select" value={timeframe} onChange={(e) => setTimeframe(e.target.value)} sx={{ width: "100%" }}>
+            <Select
+              labelId="range-label"
+              id="range-select"
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value)}
+              sx={{ width: "100%", outline: !timeframe && "2px solid #02B2AF" }}
+            >
               {timeframes.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}

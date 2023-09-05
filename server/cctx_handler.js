@@ -23,7 +23,7 @@ async function fetchCurrencyData(currency) {
 
     return currencyData.last;
   } catch (error) {
-    console.error("Error fetching cryptocurrencies:", error);
+    console.error("Error fetching cryptocurrency data:", error);
   }
 }
 
@@ -32,7 +32,6 @@ function fetchTimeFrames() {
 }
 
 async function fetchHistoryPrices(query) {
-  console.log("fetching history");
   const symbol = `${query.curr}/USDT`;
   const timeframe = query.timeframe;
   const limit = query.limit;
@@ -41,16 +40,6 @@ async function fetchHistoryPrices(query) {
     const ohlcv = await exchange.fetchOHLCV(symbol, timeframe, undefined, limit);
 
     return ohlcv;
-    // ohlcv.forEach((candle, index) => {
-    //   console.log(`Candle ${index + 1}:`, {
-    //     timestamp: new Date(candle[0]),
-    //     open: candle[1],
-    //     high: candle[2],
-    //     low: candle[3],
-    //     close: candle[4],
-    //     volume: candle[5],
-    //   });
-    // });
   } catch (error) {
     console.error("Error fetching historical data:", error);
   }

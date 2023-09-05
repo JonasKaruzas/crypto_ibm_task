@@ -5,6 +5,7 @@ const app = express();
 const port = 5000;
 
 const { fetchAllcurrencies, fetchCurrencyData, fetchTimeFrames, fetchHistoryPrices } = require("./cctx_handler");
+const { fetchCryptoNamesAndIcons } = require("./cryptoComparison_handler");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,7 +16,15 @@ app.get("/", (req, res) => {
 
 app.get("/getAllCurrencies", async (req, res) => {
   const allCurrencies = await fetchAllcurrencies();
-  res.json(allCurrencies);
+  const allCurrenciesData = await fetchCryptoNamesAndIcons();
+
+  const mergedInfo = allCurrencies.map((item) => ({
+    symbol: item,
+    FullName: allCurrenciesData[item]?.FullName || `(${item})`,
+    imageUrl: allCurrenciesData[item]?.ImageUrl || "",
+  }));
+
+  res.json(mergedInfo);
 });
 
 app.get("/getCurrencyData", async (req, res) => {

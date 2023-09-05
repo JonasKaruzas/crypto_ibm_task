@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import SearchInput from "./components/SearchInput";
-import Typography from "@mui/material/Typography";
 import SearchItem from "./components/SearchItem";
 import Stack from "@mui/material/Stack";
 import PriceGraph from "./components/PriceGraph";
-import { Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 
 function App() {
   const [currencies, setCurrencies] = useState([]);
@@ -61,15 +60,17 @@ function App() {
     <>
       <Paper className="app">
         <Stack spacing={2}>
-          <Typography variant="h3" gutterBottom className="app__title">
-            Crypto info
-          </Typography>
+          <Box className="app__title">
+            <Box className="app__title--top">CRYPTO</Box>
+            <Box className="app__title--bottom">INFO</Box>
+          </Box>
 
           <SearchInput currencies={currencies} setSearchedCurrency={setSearchedCurrency} />
 
           {searchedCurrency && (
             <SearchItem
               searchedCurrency={searchedCurrency}
+              currencies={currencies}
               currencyPrice={currencyPrice.value}
               loading={currencyPrice.loading}
               setShowHistory={setShowHistory}
