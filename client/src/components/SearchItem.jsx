@@ -14,6 +14,13 @@ const SearchItem = (props) => {
     setIsPriceValid(() => (props.currencyPrice > 0 ? true : false));
   }, [props.currencyPrice]);
 
+  useEffect(
+    (oldVal, newVal) => {
+      props.setShowHistory(newVal);
+    },
+    [isPriceValid]
+  );
+
   const filteredCurrencies = props.currencies.filter((item) => item.symbol === props.searchedCurrency);
 
   return (
@@ -21,12 +28,16 @@ const SearchItem = (props) => {
       <Grid container rowSpacing={1} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Grid item xs={6} sm={4}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar sx={{ marginRight: 2 }} src={filteredCurrencies[0].imageUrl} />
+            {filteredCurrencies[0].imageUrl ? (
+              <Avatar sx={{ marginRight: 2 }} src={filteredCurrencies[0].imageUrl} />
+            ) : (
+              <Avatar sx={{ marginRight: 2, bgcolor: "#f6f6f6" }}> </Avatar>
+            )}
             <div>{filteredCurrencies[0].FullName}</div>
           </Box>
         </Grid>
 
-        <Grid item xs={6} sm="auto">
+        <Grid item xs={6} sm="auto" sx={{ display: "flex", justifyContent: "flex-end" }}>
           {props.loading ? (
             <Skeleton variant="text" sx={{ fontSize: "24px" }} />
           ) : (
@@ -34,13 +45,13 @@ const SearchItem = (props) => {
           )}
         </Grid>
 
-        <Grid item xs={12} sm="auto" sx={{ display: "flex", justifyContent: "center" }}>
-          {!props.showHistory && (
+        {!props.showHistory && isPriceValid && (
+          <Grid item xs={12} sm="auto" sx={{ display: "flex", justifyContent: "center" }}>
             <Button variant="outlined" onClick={() => props.setShowHistory(!props.showHistory)}>
               <TimelineIcon />
             </Button>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </Grid>
     </>
   );

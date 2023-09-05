@@ -1,7 +1,8 @@
-import { Box, Divider, Grid, InputLabel, MenuItem, Paper, Select, Skeleton, Typography } from "@mui/material";
+import { Box, Divider, Grid, InputLabel, MenuItem, Select, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
+import PropTypes from "prop-types";
 
 const PriceGraph = (props) => {
   const [timeframes, setTimeframes] = useState([]);
@@ -53,10 +54,14 @@ const PriceGraph = (props) => {
     };
 
     fetchData();
-  }, [timeframe, dataPointLimit]);
+  }, [timeframe, dataPointLimit, props.searchedCurrency]);
 
   const transformX = (val) => {
     return new Date(val).toLocaleDateString() + " " + new Date(val).toLocaleTimeString();
+  };
+
+  const strokeColor = () => {
+    return loading ? "#f6f6f6" : "#02b2af";
   };
 
   return (
@@ -119,6 +124,12 @@ const PriceGraph = (props) => {
             dataset={currencyHistory}
             margin={{ top: 10, bottom: 10, left: 45, right: 0 }}
             sx={{
+              "& .MuiLineElement-root": {
+                stroke: strokeColor(),
+              },
+              "& .MuiMarkElement-root": {
+                stroke: strokeColor(),
+              },
               paddingY: 1,
               [`.${axisClasses.bottom}`]: {
                 [`.${axisClasses.tickLabel}`]: {
@@ -134,6 +145,10 @@ const PriceGraph = (props) => {
       )}
     </>
   );
+};
+
+PriceGraph.propTypes = {
+  searchedCurrency: PropTypes.string,
 };
 
 export default PriceGraph;
